@@ -84,7 +84,7 @@ double Bezier::calc_coord(double t, char axis)
  
 int Bezier::combin(int n, int i)
 {
-    return (factorial(n))/(i*factorial(n-1));
+    return (factorial(n))/(i*factorial(n-i));
 }
 
 int Bezier::pwr(int base, int exp)
