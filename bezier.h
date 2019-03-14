@@ -72,7 +72,7 @@ void Bezier::curve_from_pts()
 
 double Bezier::calc_coord(double t, char axis)
 {
-    int n = m_points.size()-1;  // degree of the curve, based on number of Points
+    int n = m_points.size()-1;  // number of the last point on the curve
     double coord=0;    // coordinate value, to be calculated
 
     // Complete formula for Bezier curve. Traverses all Points* in m_points
