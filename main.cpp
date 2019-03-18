@@ -11,29 +11,29 @@ Email: jessicp0249@student.vvc.edu
 #include<vector>
 #include<iostream>
 
-double factorial(double x)
+int factorial(int x)
 {
-    double result = x;
+    int result = x;
     for(int i=x-1; i>1; i--)
         result*=i;
 
     return result;
 }
 
-double pwr(double base, double exp)
+int pwr(int base, int exp)
 {
-    double result=1;
+    int result=1;
     for(int i=exp; i>0; i--)
         result*=base;
 
     return result;
 }
 
-double combin(double n, double i)
+int combin(int n, int i)
 {
-    double result;
-    if(i==0 || i==1) result=1;
-    else result=(factorial(n))/(i*factorial(n-1));
+    int result;
+    if(i==0 || i==1 || n==i) result=1;
+    else result=(factorial(n))/(i*factorial(n-i));
 
     return result;
 }
@@ -48,8 +48,6 @@ double calc_coord(double t, char axis, const std::vector<Point*> &m_points)
     {
         coord += combin(n,i)*pwr(1-t, n-i)*pwr(t, i)*m_points[i]->get_coord(axis);
     }
-
-    std::cout<< axis << "=" << coord << std::endl;
 
     return coord;
 }

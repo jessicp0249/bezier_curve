@@ -26,11 +26,11 @@ public:
    void add_point(Point* p);
 
    // Returns x! (x factorial)
-   double factorial(int x);    
+    int factorial(int x);    
    // Returns base with an exponent of exp
-   double pwr(double base, int exp);    
+   int pwr(int base, int exp);    
    // Given n available objects, calculates how many possible combinations of i objects can be selected
-   double combin(int n, int i);
+   int combin(int n, int i);
 
    // calculates coordinate value for the given axis (x or y) at position t on the curve
    double calc_coord(double t, char axis);    
@@ -76,10 +76,14 @@ void Bezier::curve_from_pts()
 double Bezier::calc_coord(double t, char axis)
 {
     int n = m_points.size()-1;  // degree of the curve, based on number of Points
+    int temp;
     double coord=0;    // coordinate value, to be calculated
     // Complete formula for Bezier curve. Traverses all Points* in m_points
     for(int i=0; i<=n; i++)
-        coord += combin(n,i)*pwr(1-t,n-i)*pwr(t,i)*m_points[i]->get_coord(axis);
+    {
+        temp = combin(n,i)*pwr(1-t,n-i)*pwr(t,i);
+        coord += static_cast<double>(temp)*m_points[i]->get_coord(axis);
+    }
 
     return coord;
 }
@@ -96,19 +100,19 @@ double Bezier::combin(int n, int i)
     return result;
 }
 
-double Bezier::pwr(double base, int exp)
+int Bezier::pwr(double base, int exp)
 {
-    double result=1.0;
+    int result=1;
     for(int i=exp; i>0; i--)
         result*=base;
 
     return result;
 }
 
-double Bezier::factorial(int x)
+int Bezier::factorial(int x)
 {
     // make result a double version of x
-    double result = static_cast<double>(x);
+    int result = x;
     for(int i=x-1; i>1; i--)
         result*=i;
 
