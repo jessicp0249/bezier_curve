@@ -17,8 +17,6 @@ int factorial(int x)
     for(int i=x-1; i>1; i--)
         result*=i;
 
-std::cout << x << "! = " << result << std::endl;
-
     return result;
 }
 
@@ -28,22 +26,17 @@ int pwr(int base, int exp)
     for(int i=exp; i>0; i--)
         result*=base;
 
-std::cout<< base << "^" << exp << "=" << result << std::endl;
-
     return result;
 }
 
 int combin(int n, int i)
 {
-std::cout << "(" << n << "!) / " << "("<< i << "(" << n << "-1)!)" << std::endl;
     return (factorial(n))/(i*factorial(n-1));
 }
 
 double calc_coord(double t, char axis, const std::vector<Point*> &m_points)
 {
     int n = m_points.size()-1;  // degree of the curve, based on number of Points
-
-std::cout << "n = " << n << std::endl;
 
     double coord=0;    // coordinate value, to be calculated
     // Complete formula for Bezier curve. Traverses all Points* in m_points
