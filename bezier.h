@@ -75,28 +75,26 @@ void Bezier::curve_from_pts()
 
 double Bezier::calc_coord(double t, char axis)
 {
-    int n = m_points.size()-1;  // degree of the curve, based on number of Points
+    int n = m_points.size()-1;  // number of the last point on the curve
     int temp;
     double coord=0;    // coordinate value, to be calculated
     // Complete formula for Bezier curve. Traverses all Points* in m_points
     for(int i=0; i<=n; i++)
     {
-        temp = combin(n,i)*pwr(1-t,n-i)*pwr(t,i);
+        temp = combin(n,i)*pwr(1-t, n-i)*pwr(t, i);
         coord += static_cast<double>(temp)*m_points[i]->get_coord(axis);
     }
 
     return coord;
 }
  
-double Bezier::combin(int n, int i)
+int Bezier::combin(int n, int i)
 {
-    double result;
-    if(i==0 || i==1) result=1;
+    if(i==0 || i==1 || n==0 || n==1 || n==i)
+        int result=1;
     else
-    {
-        i=static_cast<double>(i);   // Make i a double
-        result = (factorial(n))/(i*factorial(n-1));
-    }
+        int result=(factorial(n))/(i*factorial(n-i));
+    
     return result;
 }
 
@@ -111,7 +109,6 @@ int Bezier::pwr(double base, int exp)
 
 int Bezier::factorial(int x)
 {
-    // make result a double version of x
     int result = x;
     for(int i=x-1; i>1; i--)
         result*=i;

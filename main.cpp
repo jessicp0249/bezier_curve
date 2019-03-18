@@ -40,7 +40,7 @@ int combin(int n, int i)
 
 double calc_coord(double t, char axis, const std::vector<Point*> &m_points)
 {
-    double n = m_points.size()-1;  // degree of the curve, based on number of Points
+    int n = m_points.size()-1;  // degree of the curve, based on number of Points
 
     double coord=0;    // coordinate value, to be calculated
     // Complete formula for Bezier curve. Traverses all Points* in m_points
