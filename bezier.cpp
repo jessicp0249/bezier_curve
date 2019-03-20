@@ -45,10 +45,8 @@ void Bezier::curve_from_pts()
     // make curve cubic
     if(m_points.size()<n+1)
     {
-	for(int i=m_points.size()-1; i<n; i++)
-	{
+    	for(int i=m_points.size()-1; i<n; i++)
             add_point();
-	}
     }
 
 
@@ -67,17 +65,17 @@ void Bezier::curve_from_pts()
    }
 }
 
-double Bezier::calc_coord(double t, char axis)
+double Bezier::calc_coord(double pos, char axis)
 {
     int n = 3;  // number of the last point on the curve
     int temp;	// container for integer values
-    double coord=0;    // coordinate value, to be calculated
+    double coord=0;    // coordinate value, to be determined 
 
     // Complete formula for Bezier curve. Traverses all Points* in m_points
     for(int i=0; i<=n; i++)
     {
-        temp = combin(n,i)*pwr(1-t, n-i)*pwr(t, i);
-        coord += static_cast<double>(temp)*m_points[i]->get_coord(axis);
+        temp = combin(n,i);
+        coord += static_cast<double>(temp)*pwr(pos, i)*pwr(1-pos, n-i)*m_points[i]->get_coord(axis);
     }
 
     return coord;
@@ -94,9 +92,9 @@ int Bezier::combin(int n, int i)
     return result;
 }
 
-int Bezier::pwr(int base, int exp)
+double Bezier::pwr(double base, int exp)
 {
-    int result=1;
+    double result=1;
     for(int i=exp; i>0; i--)
         result*=base;
 
@@ -127,6 +125,7 @@ void Bezier::reclaim()
     }
 }
 
+
 void Bezier::print()
 {
     std::cout<<"Points:"<<std::endl;
@@ -145,3 +144,4 @@ void Bezier::print()
 
 
 }
+

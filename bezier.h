@@ -30,14 +30,14 @@ public:
    void add_point();
 
    // Returns x! (x factorial)
-    int factorial(int x);    
+   int factorial(int x);    
    // Returns base with an exponent of exp
-   int pwr(int base, int exp);    
+   double pwr(double base, int exp);    
    // Given n available objects, calculates how many possible combinations of i objects can be selected
    int combin(int n, int i);
 
    // calculates coordinate value for the given axis (x or y) at position t on the curve
-   double calc_coord(double t, char axis);    
+   double calc_coord(double pos, char axis);    
    // uses control points in m_points to plot a set of points in m_curve
    void curve_from_pts();   
 
