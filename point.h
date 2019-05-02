@@ -27,6 +27,13 @@ public:
     void set_x(double x);
     // Mutator. Sets value of y coordinate
     void set_y(double y);
+    // Mutator.  Sets values of x and y coordinates
+    void set_xy(double x, double y);
+
+    // Returns distance between two points
+    double distance_from(Point* p);
+    // Calculates the slope of a line made up of two points
+    double get_slope(Point* p);
 
     // prints point coordinates
     void print();

@@ -8,11 +8,11 @@ Email: jessicp0249@student.vvc.edu
 
 #include "point.h"
 #include "bezier.h"
+#include "anchorpoint.h"
 #include<iostream>
 
 int main()
 {
-
     Point* p1 = new Point(0,0);
     Bezier b(p1);
     Point* p2 = new Point(10,10);
@@ -20,7 +20,6 @@ int main()
     b.curve_from_pts();
 
     b.print();
-
     b.reclaim();
 
     return 0;

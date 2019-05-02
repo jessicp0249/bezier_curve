@@ -22,47 +22,84 @@ Point* Bezier::get_point(int index)
 
 void Bezier::add_point(Point* p)
 {
+    // If last anchor point has no control points...
     if(m_points.size()%2!=0)
-    {
-	add_point();
-    }
-
+        dup_point();
     m_points.push_back(p);
 }
 
-void Bezier::add_point()
+void Bezier::dup_point()
 {
+    // Get index of last point
     int last_pt = m_points.size()-1;
+    // Add copy of last point to vector
     m_points.push_back(m_points[last_pt]);
 }
 
 void Bezier::curve_from_pts()
 {
    double pos,x,y;    // Position on curve, x coordinate, y coordinate
-   int n=3;
+   int cubic=3;     // Minimum number of points
    double max=10;    // number of points to calculate +1
 
-    // make curve cubic
-    if(m_points.size()<n+1)
+#if 0
+    // If curve is not cubic, add points until it is
+    for(int i=m_points.size(); i<=cubic; i++)
+        dup_point();
+#endif
+
+    // If curve has 2 or fewer points, use linear equation
+    if(m_points.size()<cubic)
+       linear_curve_from_pts(); 
+
+    // Use summation operator on equation
+    for(int i=1; i<max; i++)
     {
-    	for(int i=m_points.size()-1; i<n; i++)
-            add_point();
-    }
+        pos=static_cast<double>(i)/max;       // increment position from 0 to 1
+        x = calc_coord(pos,'x');    // calculate x coordinate
+        y = calc_coord(pos,'y');    // calculate y coordinate
 
-
-   for(int i=1; i<max; i++)
-   {
-       pos=static_cast<double>(i)/max;       // increment position from 0 to 1
-       x = calc_coord(pos,'x');    // calculate x coordinate
-       y = calc_coord(pos,'y');    // calculate y coordinate
-
-        		//value check
-		       std::cout<<"Point["<<i<<"] ("<<x<<", "<<y<<std::endl;
-		       // value check
+        		// Debug. value check
+		       std::cout<<"Point["<<i<<"] ("<<x<<", "<<y<<")"<<std::endl;
+		       // Debug. value check
 
        Point* p = new Point(x,y);    // create new Point from coords and assign pointer
        m_curve.push_back(p);    // add new Point* to curve
    }
+}
+
+void Bezier::linear_curve_from_pts()
+{
+    // If Bezier only has one point, plot only that point
+    if(m_points.size()==1)
+        m_curve.push_back(m_points[0]);
+    else
+    {
+        // y1 - y2 = m(x1 - x2)
+        const int MAX=10;
+        // Position on line (in percent), x coordinate, y coordinate
+        double pos,x,y;    
+
+        int slope = m_points[0]->get_coord('y') - m_points[1]->get_coord('y');
+        slope = slope/(m_points[0]->get_coord('x') - m_points[1]->get_coord('x'));
+
+        for(int i=1; i<MAX; i++)
+        {
+            pos=static_cast<double>(i)/static_cast<double>(MAX);
+            x=calc_linear_coord(pos,'x');
+            y=calc_linear_coord(pos,'y');
+
+            Point* p = new Point(x,y);    // create new Point from coords and assign pointer
+            m_curve.push_back(p);    // add new Point* to curve
+        }
+    }
+}
+
+double Bezier::calc_linear_coord(double pos, char axis)
+{
+    double result = m_points[1]->get_coord(axis)-m_points[0]->get_coord(axis);
+    result*=pos;
+    return result;
 }
 
 double Bezier::calc_coord(double pos, char axis)

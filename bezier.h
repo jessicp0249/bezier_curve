@@ -27,7 +27,7 @@ public:
    // adds the given Point* to m_points vector
    void add_point(Point* p);
    // duplicates the last Point* on m_points vector (simulates non-bezier anchor point)
-   void add_point();
+   void dup_point();
 
    // Returns x! (x factorial)
    int factorial(int x);    
@@ -36,10 +36,17 @@ public:
    // Given n available objects, calculates how many possible combinations of i objects can be selected
    int combin(int n, int i);
 
-   // calculates coordinate value for the given axis (x or y) at position t on the curve
+   // calculates coordinate value for the given axis (x or y) at given position on the curve
    double calc_coord(double pos, char axis);    
+
+    // calculates coordinate value for the given axis (x or y) at given position on a 2-point line
+    double calc_linear_coord(double pose, char axis);
+
    // uses control points in m_points to plot a set of points in m_curve
    void curve_from_pts();   
+
+    // plots a line if m_points has 2 or fewer points
+    void linear_curve_from_pts();
 
    // prints coords of Points* in m_points and m_curve
    void print();
